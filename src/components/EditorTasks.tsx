@@ -42,7 +42,7 @@ export default function EditorTasks({ handleEditorDidMount }: EditorTasksProps) 
             <select className='select_lang' value={currentTask} onChange={handleSelectChange}>
                 {optionMap}
             </select>
-            <Editor height="50vh" width="100%" key={currentTask} value={taskContent} language='html'  options={{readOnly: true, domReadOnly: true, contextmenu: false, quickSuggestions: false}}/>
+            <Editor theme="vs-dark" height="50vh" width="100%" key={currentTask} value={taskContent} language='html'  options={{readOnly: true, domReadOnly: true, contextmenu: false, quickSuggestions: false}}/>
         </div>
     )
 }

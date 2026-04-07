@@ -36,3 +36,27 @@ body{
 }
 
 // #f67db3
+
+
+
+/* Ширина всего скроллбара */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Фон под крутилкой */
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* Сама крутилка (ползунок) */
+::-webkit-scrollbar-thumb {
+  background-color: #f67db3;
+  border-radius: 6px;       /* Округление */
+  border: 3px solid #f67db3;  /* Отступ от краев (эффект парящей кнопки) */
+}
+
+/* Цвет крутилки при наведении */
+::-webkit-scrollbar-thumb:hover {
+  background: #fc5aa3;
+}
