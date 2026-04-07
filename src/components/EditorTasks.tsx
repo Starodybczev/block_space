@@ -1,10 +1,8 @@
-import React, { useState, type ChangeEvent } from 'react'
-import { Editor, type OnMount } from '@monaco-editor/react'
+import { useState, type ChangeEvent } from 'react'
+import { Editor } from '@monaco-editor/react'
 import { tasksArray } from '../data/taskArray'
 
-type EditorTasksProps = {
-    handleEditorDidMount: OnMount
-}
+
 
 const option = [
     { id: 1, name: "Задание 1" },
@@ -18,7 +16,7 @@ const option = [
 ]
 
 
-export default function EditorTasks({ handleEditorDidMount }: EditorTasksProps) {
+export default function EditorTasks() {
 
     const [currentTask, setCurrentTask] = useState(option[0].id)
 

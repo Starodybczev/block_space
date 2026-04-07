@@ -1,4 +1,4 @@
-import { useCallback, type RefObject } from 'react';
+import { type RefObject } from 'react';
 import { editor } from 'monaco-editor';
 
 type CodeTypeRunner = {

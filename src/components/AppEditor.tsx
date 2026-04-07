@@ -1,4 +1,4 @@
-import React, { useRef, useState, type ChangeEvent } from 'react'
+import { useRef, useState, type ChangeEvent } from 'react'
 import Editor, { type OnMount } from '@monaco-editor/react';
 import { useCodeRunner, type SupportedLanguage } from '../utils/hooks/useCodeRunner';
 import EditorTasks from './EditorTasks';
@@ -72,7 +72,7 @@ export default function AppEditor() {
             </button>
             <div className='block_editor'>
                 <Editor theme="vs-dark" height="50vh" width="100%" path={currentLang} defaultValue={currentConfig?.firstVal} language={currentLang} onMount={handleEditorDidMount} />
-                <EditorTasks handleEditorDidMount={handleEditorDidMount} />
+                <EditorTasks />
             </div>
             <div className='run_editor' style={{ flex: 1, borderTop: '5px solid #444', background: 'white' }}>
                 <iframe
