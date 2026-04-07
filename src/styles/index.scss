@@ -1,5 +1,6 @@
 body{
-    background-color: red;
+    background-color: black;
+    padding: 20px 0;
 }
 
 .block_editor{
@@ -16,3 +17,22 @@ body{
     width: 100%;
     margin-bottom: 20px;
 }
+
+.select_lang{
+    background-color: #f67db3;
+    padding: 5px;
+    border: #f67db3;
+}
+
+.btn_run{
+    background-color: #16c4ee;
+    border: #16c4ee;
+    padding: 6px 15px;
+    cursor: pointer;
+    transition: 1s;
+    &:hover{
+        background-color: #37cdf3;
+    }
+}
+
+// #f67db3

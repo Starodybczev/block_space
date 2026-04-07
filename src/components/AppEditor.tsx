@@ -14,10 +14,35 @@ export default function AppEditor() {
 
 
     const options = [
-        { id: 1, name: "javascript" },
-        { id: 2, name: "html" },
-        { id: 3, name: "css" }
-    ]
+        {
+            id: 1,
+            name: "javascript",
+            firstVal: "// Напишите ваш скрипт\nconsole.log('Hello World!');"
+        },
+        {
+            id: 2,
+            name: "html",
+            firstVal: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>`
+        },
+        {
+            id: 3,
+            name: "css",
+            firstVal: "/* Стили */\nbody {\n  margin: 0;\n  padding: 0;\n}"
+        }
+    ];
+
+    const currentConfig = options.find((item) => item.name === currentLang)
+
 
 
     const optionMap = options.map(({ id, name }) => {
@@ -39,14 +64,14 @@ export default function AppEditor() {
 
     return (
         <div className='block_alls'>
-            <select value={currentLang} onChange={handleChangeValue}>
+            <select className='select_lang' value={currentLang} onChange={handleChangeValue}>
                 {optionMap}
             </select>
-            <button onClick={() => runCode(currentLang)}>
+            <button className='btn_run' onClick={() => runCode(currentLang)}>
                 run
             </button>
             <div className='block_editor'>
-                <Editor height="50vh" width="100%" defaultValue="// some comment" language={currentLang} onMount={handleEditorDidMount} />
+                <Editor theme="vs-dark" height="50vh" width="100%" path={currentLang} defaultValue={currentConfig?.firstVal} language={currentLang} onMount={handleEditorDidMount} />
                 <EditorTasks handleEditorDidMount={handleEditorDidMount} />
             </div>
             <div style={{ flex: 1, borderTop: '5px solid #444', background: 'white' }}>
@@ -54,7 +79,7 @@ export default function AppEditor() {
                     ref={iframeRef}
                     title="output"
                     sandbox="allow-scripts allow-modals allow-same-origin"
-                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    style={{ width: '100%', height: '400px', border: 'none' }}
                 />
             </div>
         </div>

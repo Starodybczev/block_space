@@ -39,10 +39,10 @@ export default function EditorTasks({ handleEditorDidMount }: EditorTasksProps) 
     }
     return (
         <div className='block_two'>
-            <select value={currentTask} onChange={handleSelectChange}>
+            <select className='select_lang' value={currentTask} onChange={handleSelectChange}>
                 {optionMap}
             </select>
-            <Editor height="50vh" width="100%" key={currentTask} value={taskContent} language='html' onMount={handleEditorDidMount} />
+            <Editor height="50vh" width="100%" key={currentTask} value={taskContent} language='html'  options={{readOnly: true, domReadOnly: true, contextmenu: false, quickSuggestions: false}}/>
         </div>
     )
 }
