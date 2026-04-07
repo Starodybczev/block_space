@@ -9,9 +9,7 @@ body{
     gap: 10px;
 }
 
-.block_alls{
-    width: 100%;
-}
+
 
 .block_two{
     width: 100%;
@@ -59,4 +57,13 @@ body{
 /* Цвет крутилки при наведении */
 ::-webkit-scrollbar-thumb:hover {
   background: #fc5aa3;
+}
+
+
+.run_editor{
+    width: 100vw    
+}
+
+.block_alls{
+    width: 100vw;
 }

@@ -74,7 +74,7 @@ export default function AppEditor() {
                 <Editor theme="vs-dark" height="50vh" width="100%" path={currentLang} defaultValue={currentConfig?.firstVal} language={currentLang} onMount={handleEditorDidMount} />
                 <EditorTasks handleEditorDidMount={handleEditorDidMount} />
             </div>
-            <div style={{ flex: 1, borderTop: '5px solid #444', background: 'white' }}>
+            <div className='run_editor' style={{ flex: 1, borderTop: '5px solid #444', background: 'white' }}>
                 <iframe
                     ref={iframeRef}
                     title="output"
