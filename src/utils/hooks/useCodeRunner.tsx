@@ -61,12 +61,12 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
                 <pre style="white-space: pre-wrap; margin: 0;">${syntaxError}</pre>
             </div>
             `;
-                    return; 
+                    return;
                 }
             }
 
-                html = '<div id="app"></div>';
-                js = `
+            html = '<div id="app"></div>';
+            js = `
                 <script>
                     try {
                         ${code}
@@ -80,15 +80,21 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
                     }
                 <\/script>
             `;
-            }
+        }
 
-            const fullDoc = `
+        const fullDoc = `
             <!DOCTYPE html>
             <html>
                 <head>
                     <meta charset="UTF-8">
                     <style>
-                        body { margin: 0; padding: 10px; font-family: sans-serif; }
+                            html, body { 
+                    margin: 0; 
+                    padding: 10px; 
+                    min-height: 100vh;
+                    /* Используем тот же путь, он подтянется из корня сайта */
+                    cursor: url("/cursore.svg") 0 0, auto !important; 
+                }
                     </style>
                     ${css}
                 </head>
@@ -99,8 +105,8 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
             </html>
         `;
 
-            iframe.srcdoc = fullDoc;
-        };
-
-        return { runCode };
+        iframe.srcdoc = fullDoc;
     };
+
+    return { runCode };
+};

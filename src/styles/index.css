@@ -2,6 +2,7 @@
 body {
   background-color: black;
   padding: 20px 0;
+  cursor: url("/cursore.svg") 0 0, auto !important;
 }
 
 .block_editor {
@@ -25,7 +26,7 @@ body {
   background-color: #16c4ee;
   border: #16c4ee;
   padding: 6px 15px;
-  cursor: pointer;
+  cursor: url("/cursore_hover.svg") 0 0, auto;
   transition: 1s;
 }
 .btn_run:hover {
@@ -56,8 +57,39 @@ body {
 
 .run_editor {
   width: 100vw;
+  cursor: url("/cursore.svg") 0 0, auto !important;
+}
+
+.iframe_block {
+  cursor: url("/cursore.svg") 0 0, auto !important;
 }
 
 .block_alls {
   width: 100vw;
+}
+
+/* Область, где находится текст */
+.monaco-editor .view-lines {
+  cursor: url("/cursore_input.svg") 0 0, text !important;
+}
+
+/* Пустая область редактора ниже текста */
+.monaco-editor .lines-content {
+  cursor: url("/cursore_input.svg") 0 0, text !important;
+}
+
+/* Защитный слой и область выделения */
+.monaco-editor .overflow-guard,
+.monaco-editor .monaco-scrollable-element {
+  cursor: url("/cursore_input.svg") 0 0, auto !important;
+}
+
+/* Наведение на номера строк (левая панель) */
+.monaco-editor .margin {
+  cursor: url("/cursore_input.svg") 0 0, auto !important;
+}
+
+/* Если хочешь, чтобы при наведении на сам курсор (каретку) тоже был твой SVG */
+.monaco-editor .cursor {
+  cursor: url("/cursore_input.svg") 0 0, text !important;
 }/*# sourceMappingURL=index.css.map */

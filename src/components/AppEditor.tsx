@@ -76,9 +76,11 @@ export default function AppEditor() {
             </div>
             <div className='run_editor' style={{ flex: 1, borderTop: '5px solid #444', background: 'white' }}>
                 <iframe
+                    className='iframe_block'
                     ref={iframeRef}
                     title="output"
                     sandbox="allow-scripts allow-modals allow-same-origin"
+                    srcDoc={`<html><head><style>body{cursor:url('/cursore.svg') 0 0, auto; height:100vh; margin:0;}</style></head><body></body></html>`}
                     style={{ width: '100%', height: '400px', border: 'none' }}
                 />
             </div>
