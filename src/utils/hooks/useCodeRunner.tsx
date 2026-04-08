@@ -1,5 +1,7 @@
 import { type RefObject } from 'react';
 import { editor } from 'monaco-editor';
+import { ExceptionReader } from '../func/ExceptionReader';
+import { createSafeScript } from '../func/createSafeScript';
 
 type CodeTypeRunner = {
     editorRef: RefObject<editor.IStandaloneCodeEditor | null>,
@@ -13,8 +15,22 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
     const runCode = (currentLang: SupportedLanguage) => {
         if (!editorRef.current || !iframeRef.current) return;
 
-        const code = editorRef.current.getValue().trim(); // Убираем пробелы
+        const code = editorRef.current.getValue().trim();
         const iframe = iframeRef.current;
+
+        const sintaxError = ExceptionReader(code)
+
+
+
+        if (sintaxError) {
+            iframe.srcdoc = `
+                <div style="color:red;padding:20px;font-family:monospace;">
+                    <h3>Ошибка:</h3>
+                    <pre>${sintaxError}</pre>
+                </div>
+            `
+            return
+        }
 
         // 1. Проверка на пустой редактор
         if (!code) {
@@ -42,6 +58,9 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
             css = `<style>${code}</style>`;
         } else if (currentLang === 'javascript') {
 
+            js = createSafeScript(code)
+
+
             const checkJsErrors = (code: string): string | null => {
                 try {
                     new Function(code);
@@ -66,20 +85,7 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
             }
 
             html = '<div id="app"></div>';
-            js = `
-                <script>
-                    try {
-                        ${code}
-                    } catch (err) {
-                        document.body.innerHTML = \`
-                            <div style="color: red; padding: 20px; font-family: monospace;">
-                                <h3>Runtime Error:</h3>
-                                <pre>\${err.message}</pre>
-                            </div>
-                        \`;
-                    }
-                <\/script>
-            `;
+
         }
 
         const fullDoc = `
