@@ -1,10 +1,16 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState } from 'react'
 import { Editor } from '@monaco-editor/react'
 import { tasksArray } from '../data/taskArray'
+import Modal from '../utils/const/Modal'
+import useModal from '../utils/hooks/useModal'
+import CreateTaskForm from './CreateTaskForm'
 
 
-
-const option = [
+interface optionType {
+    id: number;
+    name: string;
+}
+export const option: optionType[] = [
     { id: 1, name: "Задание 1" },
     { id: 2, name: "Задание 2" },
     { id: 3, name: "Задание 3" },
@@ -15,32 +21,78 @@ const option = [
     { id: 8, name: "Задание 8" }
 ]
 
+type CreateTaskData = {
+  title: string;
+  task: string;
+  criteria: string;
+  category: string;
+};
 
-export default function EditorTasks() {
 
-    const [currentTask, setCurrentTask] = useState(option[0].id)
+export default function EditorTasks(){
 
-    const optionMap = option.map(({ id, name }) => {    
-        return (
-            <option key={id} value={id}>
-                {name}
-            </option>
-        )
-    })
-    const activeId = tasksArray.find((el) => el.id === currentTask)
-    const taskContent = activeId 
-        ? `\n\n ${activeId.title} \n\n ${activeId.task} \n ${activeId.criteria}` 
-        : "Задание не выбрано";
+const [tasks, setTasks] = useState(tasksArray)
+const [optionsList, setOptionsList] = useState(option)
 
-    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        setCurrentTask(Number(e.target.value))
-    }
-    return (
-        <div className='block_two'>
-            <select className='select_lang' value={currentTask} onChange={handleSelectChange}>
-                {optionMap}
-            </select>
-            <Editor theme="vs-dark" height="50vh" width="100%" key={currentTask} value={taskContent} language='html'  options={{readOnly: true, domReadOnly: true, contextmenu: false, quickSuggestions: false}}/>
-        </div>
-    )
+const [currentTaskId, setCurrentTaskId] = useState(option[0].id)
+const { isOpen, isOpenModaL, closeModal } = useModal()
+
+const createTask = (data: CreateTaskData) => {
+    try {
+
+        const newId = tasks.length + 1;
+
+        const newTaskObj = {
+            id: newId,
+            ...data
+        };
+
+        setTasks(prev => [...prev, newTaskObj]);
+        setOptionsList(prev => [...prev, {
+            id: newId,
+            name: data.title
+        }]);
+
+        setCurrentTaskId(newId);
+        closeModal();
+    } catch (e) {
+        console.log(e)
+    } 
+};
+
+const activeTask = tasks.find((el) => el.id === currentTaskId)
+const taskContent = activeTask
+    ? `\n\n ${activeTask.title} \n\n ${activeTask.task} \n ${activeTask.criteria}`
+    : "Задание не выбрано"
+
+return (
+    <div className='block_two'>
+        <Modal isOpen={isOpen} closeModal={closeModal}>
+            <CreateTaskForm onSubmit={createTask}/>
+        </Modal>
+
+        <select
+            className='select_lang'
+            value={currentTaskId}
+            onChange={(e) => setCurrentTaskId(Number(e.target.value))}
+        >
+            {optionsList.map(({ id, name }) => (
+                <option key={id} value={id}>{name}</option>
+            ))}
+        </select>
+
+        <button className='btn_run' onClick={isOpenModaL}>Create Task</button>
+
+        <Editor
+            theme="vs-dark"
+            height="50vh"
+            width="100%"
+            key={currentTaskId}
+            value={taskContent}
+            language='html'
+            options={{ readOnly: true, domReadOnly: true }}
+        />
+    </div>
+)
 }
+

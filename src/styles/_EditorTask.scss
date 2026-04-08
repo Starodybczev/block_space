@@ -1,0 +1,21 @@
+.form_block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+    input{
+        padding: 10px;
+    }
+    button{
+            background-color: #16c4ee;
+    border: #16c4ee;
+    padding: 6px 15px;
+    cursor: url("/cursore_hover.svg") 0 0, auto;
+    transition: 1s;
+    &:hover{
+        background-color: #37cdf3;
+    }
+    }
+}

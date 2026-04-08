@@ -2,6 +2,7 @@ import { type RefObject } from 'react';
 import { editor } from 'monaco-editor';
 import { ExceptionReader } from '../func/ExceptionReader';
 import { createSafeScript } from '../func/createSafeScript';
+import { useAssets } from '../../contex/AssetsContext';
 
 type CodeTypeRunner = {
     editorRef: RefObject<editor.IStandaloneCodeEditor | null>,
@@ -12,13 +13,23 @@ export type SupportedLanguage = "javascript" | "css" | "html"
 
 export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
 
+    const { assets } = useAssets()
+
     const runCode = (currentLang: SupportedLanguage) => {
         if (!editorRef.current || !iframeRef.current) return;
 
         const code = editorRef.current.getValue().trim();
         const iframe = iframeRef.current;
 
-        const sintaxError = ExceptionReader(code)
+        let sintaxError: string | null = null
+
+        const assetsMap = Object.fromEntries(
+            assets.map((a) => [`/assets/${a.name}`, a.url])
+        )
+
+        if (currentLang === "javascript") {
+            sintaxError = ExceptionReader(code)
+        }
 
 
 
@@ -106,6 +117,18 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
                 </head>
                 <body>
                     ${html}
+                    <script>
+  window.__ASSETS__ = ${JSON.stringify(assetsMap)};
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("img").forEach(img => {
+      const src = img.getAttribute("src");
+      if (window.__ASSETS__[src]) {
+        img.src = window.__ASSETS__[src];
+      }
+    });
+  });
+</script>
                     ${js}
                 </body>
             </html>

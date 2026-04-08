@@ -2,6 +2,9 @@ import { useRef, useState, type ChangeEvent } from 'react'
 import Editor, { type OnMount } from '@monaco-editor/react';
 import { useCodeRunner, type SupportedLanguage } from '../utils/hooks/useCodeRunner';
 import EditorTasks from './EditorTasks';
+import useModal from '../utils/hooks/useModal';
+import Modal from '../utils/const/Modal';
+import AssetsProviderFile from './AssetsProviderFile';
 
 export default function AppEditor() {
 
@@ -9,6 +12,8 @@ export default function AppEditor() {
 
     const editorRef = useRef<any>(null)
     const iframeRef = useRef<HTMLIFrameElement>(null)
+
+    const { isOpenModaL, isOpen, closeModal } = useModal()
 
     const { runCode } = useCodeRunner({ editorRef, iframeRef })
 
@@ -64,12 +69,16 @@ export default function AppEditor() {
 
     return (
         <div className='block_alls'>
+            <Modal isOpen={isOpen} closeModal={closeModal}>
+                <AssetsProviderFile/>
+            </Modal>
             <select className='select_lang' value={currentLang} onChange={handleChangeValue}>
                 {optionMap}
             </select>
             <button className='btn_run' onClick={() => runCode(currentLang)}>
                 run
             </button>
+            <button className='assets_btn' onClick={() => isOpenModaL()}>assets</button>
             <div className='block_editor'>
                 <Editor theme="vs-dark" height="50vh" width="100%" path={currentLang} defaultValue={currentConfig?.firstVal} language={currentLang} onMount={handleEditorDidMount} />
                 <EditorTasks />

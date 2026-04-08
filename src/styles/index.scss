@@ -1,8 +1,14 @@
+@use "./modal";
+@use "./AssetsProvider";
+@use "./EditorTask";
+
 body{
     background-color: black;
     padding: 20px 0;
+    overflow-x: hidden;
     cursor: url("/cursore.svg") 0 0, auto !important;
 }
+
 
 .block_editor{
     display: flex;
