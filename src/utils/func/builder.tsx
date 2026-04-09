@@ -1,5 +1,7 @@
+import type { SupportedLanguage } from "../hooks/useCodeRunner";
+
 interface BuildLang {
-    lang: string;
+    lang: SupportedLanguage;
     code: string;
     createSafeScript: (code: string) => string
 }

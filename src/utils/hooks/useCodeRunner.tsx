@@ -1,4 +1,4 @@
-import { type RefObject } from 'react';
+import { useMemo, type RefObject } from 'react';
 import { editor } from 'monaco-editor';
 import { ExceptionReader } from '../func/ExceptionReader';
 import { createSafeScript } from '../func/createSafeScript';
@@ -6,6 +6,7 @@ import { useAssets } from '../../contex/AssetsContext';
 import { validateJS } from '../func/validator';
 import { buildByLang } from '../func/builder';
 import { buildDocument } from '../func/buildDoc';
+import { createTextMessage } from '../func/createTextMessage';
 
 type CodeTypeRunner = {
     editorRef: RefObject<editor.IStandaloneCodeEditor | null>,
@@ -24,13 +25,15 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
         const code = editorRef.current.getValue().trim();
         const iframe = iframeRef.current;
 
-        const assetsMap = Object.fromEntries(
-            assets.map((a) => [`/assets/${a.name}`, a.url])
-        );
+        const assetsMap = useMemo(() => {
+            Object.fromEntries(
+                assets.map((a) => [`/assets/${a.name}`, a.url])
+            );
+        }, [assets])
 
 
         if (!code) {
-            iframe.srcdoc = `<h3>Редактор пуст</h3>`;
+            createTextMessage({ iframe, content: `<h3>Редактор пуст</h3>` })
             return;
         }
 
@@ -39,7 +42,7 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
             const error = ExceptionReader(code) || validateJS(code);
 
             if (error) {
-                iframe.srcdoc = `<pre style="color:red">${error}</pre>`;
+                createTextMessage({ iframe, content: `<pre style="color:red">${error}</pre>` })
                 return;
             }
         }
@@ -58,8 +61,8 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
             assets: assetsMap
         });
 
-        iframe.srcdoc = fullDoc;
+        createTextMessage({ iframe, content: fullDoc })
     };
 
-    return {runCode}
+    return { runCode }
 }
