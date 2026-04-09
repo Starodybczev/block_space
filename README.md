@@ -36,7 +36,7 @@ Users can write code and languages such as js css html
 ---
 ## Screen 
 <p>
-  <img src="src/assets/screen_app.png"/>
+  <img src="src/assets/screen_app_all.png"/>
 </p>
 ---
 
