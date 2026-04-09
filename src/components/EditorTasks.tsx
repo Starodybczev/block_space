@@ -3,7 +3,7 @@ import { Editor } from '@monaco-editor/react'
 import { tasksArray } from '../data/taskArray'
 import Modal from '../utils/const/Modal'
 import useModal from '../utils/hooks/useModal'
-import CreateTaskForm from './CreateTaskForm'
+import {type CreateTaskData, CreateTaskForm} from "./index"
 
 
 interface optionType {
@@ -21,12 +21,6 @@ export const option: optionType[] = [
     { id: 8, name: "Задание 8" }
 ]
 
- export type CreateTaskData = {
-  title: string;
-  task: string;
-  criteria: string;
-  category: string;
-};
 
 
 export default function EditorTasks(){

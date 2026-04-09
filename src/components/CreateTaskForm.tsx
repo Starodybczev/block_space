@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
-import type { CreateTaskData } from './EditorTasks';
+import type { CreateTaskData } from './index';
 
 type Props = {
     onSubmit: (data: {

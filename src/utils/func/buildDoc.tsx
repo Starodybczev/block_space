@@ -25,13 +25,15 @@ export function buildDocument({ html, css, js, assets }: BuildDocType) {
                 <body>
                     ${html}
                     <script>
-  window.__ASSETS__ = ${JSON.stringify(assets)};
+  window.__ASSETS__ = ${JSON.stringify(assets || {})};
 
   document.addEventListener("DOMContentLoaded", () => {
+    const assets = window.__ASSETS__ || {};
+
     document.querySelectorAll("img").forEach(img => {
       const src = img.getAttribute("src");
-      if (window.__ASSETS__[src]) {
-        img.src = window.__ASSETS__[src];
+      if (assets[src]) {
+        img.src = assets[src];
       }
     });
   });

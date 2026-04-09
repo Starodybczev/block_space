@@ -1,4 +1,4 @@
-import { useMemo, type RefObject } from 'react';
+import { type RefObject } from 'react';
 import { editor } from 'monaco-editor';
 import { ExceptionReader } from '../func/ExceptionReader';
 import { createSafeScript } from '../func/createSafeScript';
@@ -19,17 +19,15 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
 
     const { assets } = useAssets()
 
+    const assetsMap = Object.fromEntries(
+        assets.map((a) => [`/assets/${a.name}`, a.url])
+    );
+
     const runCode = (currentLang: SupportedLanguage) => {
         if (!editorRef.current || !iframeRef.current) return;
 
         const code = editorRef.current.getValue().trim();
         const iframe = iframeRef.current;
-
-        const assetsMap = useMemo(() => {
-            Object.fromEntries(
-                assets.map((a) => [`/assets/${a.name}`, a.url])
-            );
-        }, [assets])
 
 
         if (!code) {
@@ -62,6 +60,8 @@ export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
         });
 
         createTextMessage({ iframe, content: fullDoc })
+
+        console.log(assetsMap)
     };
 
     return { runCode }
