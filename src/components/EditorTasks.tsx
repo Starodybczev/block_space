@@ -21,7 +21,7 @@ export const option: optionType[] = [
     { id: 8, name: "Задание 8" }
 ]
 
-type CreateTaskData = {
+ export type CreateTaskData = {
   title: string;
   task: string;
   criteria: string;

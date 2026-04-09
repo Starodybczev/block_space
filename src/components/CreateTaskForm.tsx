@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import type { CreateTaskData } from './EditorTasks';
 
 type Props = {
     onSubmit: (data: {
@@ -9,33 +10,51 @@ type Props = {
     }) => void;
 };
 
+type FieldType = {
+    name: keyof CreateTaskData;
+    placeholder: string;
+}
+
+const fields: FieldType[] = [
+    { name: "title", placeholder: "New task name" },
+    { name: "criteria", placeholder: "New criteria" },
+    { name: "task", placeholder: "New task" },
+    { name: "category", placeholder: "New category" }
+]
+
 export default function CreateTaskForm({ onSubmit }: Props) {
-    const [taskName, setTaskName] = useState<string>("")
-    const [newCriteria, setNewCriteria] = useState<string>("")
-    const [newTask, setNewTask] = useState<string>("")
-    const [newCategory, setNewCategory] = useState<string>("")
+    const [task, setTask] = useState<CreateTaskData>({
+        title: "",
+        criteria: "",
+        task: "",
+        category: ""
+    })
+
+    const handleValues = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setTask((prev) => ({ ...prev, [name as keyof CreateTaskData]: value }))
+    }
+
+    const handleSubbmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        onSubmit(task)
+
+        setTask({
+            title: "",
+            criteria: "",
+            task: "",
+            category: ""
+        })
+    }
+
+    const fieldInput = fields.map(({ name, placeholder }) => {
+        return (
+            <input key={name} name={name} value={task[name]} type="text" required placeholder={placeholder} onChange={handleValues} />
+        )
+    })
     return (
-        <form className='form_block' onSubmit={(e) => {
-            e.preventDefault();
-            e.currentTarget.reset()
-            onSubmit({ title: taskName, task: newTask, criteria: newCriteria, category: newCategory });
-        }}>
-            <input
-                type='text'
-                placeholder='New task name'
-                required
-                onChange={(e) => setTaskName(e.target.value)}
-            />
-            <input
-                type='text'
-                required
-                placeholder='New category'
-                onChange={(e) => setNewCriteria(e.target.value)}
-            />
-            <input
-                required type='text' placeholder='new task' onChange={(e) => setNewTask(e.target.value)} />
-            <input type='text'
-                required placeholder='new category' onChange={(e) => setNewCategory(e.target.value)} />
+        <form className='form_block' onSubmit={handleSubbmit}>
+            {fieldInput}
             <button>Save Changes</button>
         </form>
     )
