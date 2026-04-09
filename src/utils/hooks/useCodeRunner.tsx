@@ -1,19 +1,13 @@
 import { type RefObject } from 'react';
-import { editor } from 'monaco-editor';
-import { ExceptionReader } from '../func/ExceptionReader';
-import { createSafeScript } from '../func/createSafeScript';
+import { editor } from 'monaco-editor';;
 import { useAssets } from '../../contex/AssetsContext';
-import { validateJS } from '../func/validator';
-import { buildByLang } from '../func/builder';
-import { buildDocument } from '../func/buildDoc';
-import { createTextMessage } from '../func/createTextMessage';
+import { type SupportedLanguage, createSafeScript, ExceptionReader, validateJS, buildByLang, buildDocument, createTextMessage } from "../index"
+
 
 type CodeTypeRunner = {
     editorRef: RefObject<editor.IStandaloneCodeEditor | null>,
     iframeRef: RefObject<HTMLIFrameElement | null>
 }
-
-export type SupportedLanguage = "javascript" | "css" | "html"
 
 export function useCodeRunner({ editorRef, iframeRef }: CodeTypeRunner) {
 

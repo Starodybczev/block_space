@@ -1,10 +1,7 @@
 import { useRef, useState, type ChangeEvent } from 'react'
 import Editor, { type OnMount } from '@monaco-editor/react';
-import { useCodeRunner, type SupportedLanguage } from '../utils/hooks/useCodeRunner';
-import useModal from '../utils/hooks/useModal';
-import Modal from '../utils/const/Modal';
+import {type SupportedLanguage, useCodeRunner, Modal, useModal} from "../utils"
 import {EditorTasks, AssetsProviderFile} from "./index"
-
 
     const options = [
         {

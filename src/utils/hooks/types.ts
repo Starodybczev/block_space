@@ -1,0 +1,1 @@
+export type SupportedLanguage = "javascript" | "css" | "html"

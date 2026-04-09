@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Editor } from '@monaco-editor/react'
 import { tasksArray } from '../data/taskArray'
-import Modal from '../utils/const/Modal'
-import useModal from '../utils/hooks/useModal'
+import {Modal, useModal} from "../utils"
 import {type CreateTaskData, CreateTaskForm} from "./index"
 
 

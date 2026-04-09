@@ -1,4 +1,4 @@
-import type { SupportedLanguage } from "../hooks/useCodeRunner";
+import {type SupportedLanguage} from "../index"
 
 interface BuildLang {
     lang: SupportedLanguage;
