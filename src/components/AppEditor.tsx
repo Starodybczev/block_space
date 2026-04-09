@@ -6,17 +6,6 @@ import useModal from '../utils/hooks/useModal';
 import Modal from '../utils/const/Modal';
 import AssetsProviderFile from './AssetsProviderFile';
 
-export default function AppEditor() {
-
-    const [currentLang, setCurrentLang] = useState<SupportedLanguage>("html")
-
-    const editorRef = useRef<any>(null)
-    const iframeRef = useRef<HTMLIFrameElement>(null)
-
-    const { isOpenModaL, isOpen, closeModal } = useModal()
-
-    const { runCode } = useCodeRunner({ editorRef, iframeRef })
-
 
     const options = [
         {
@@ -45,6 +34,18 @@ export default function AppEditor() {
             firstVal: "/* Стили */\nbody {\n  margin: 0;\n  padding: 0;\n}"
         }
     ];
+
+export default function AppEditor() {
+
+    const [currentLang, setCurrentLang] = useState<SupportedLanguage>("html")
+
+    const editorRef = useRef<any>(null)
+    const iframeRef = useRef<HTMLIFrameElement>(null)
+
+    const { isOpenModaL, isOpen, closeModal } = useModal()
+
+    const { runCode } = useCodeRunner({ editorRef, iframeRef })
+
 
     const currentConfig = options.find((item) => item.name === currentLang)
 
